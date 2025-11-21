@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_registro">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:src="@drawable/marvel_logo"
+            android:layout_marginTop="40dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="550dp"
+            android:background="@drawable/input_field_back"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Register to continue"
+                android:textColor="#F0E4D5"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edtName"
+                android:layout_width="300dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/input_field"
+                android:hint="Name"
+                android:padding="12dp"
+                android:textColor="#F0E4D5"
+                android:textColorHint="#cccccc" />
+
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="300dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/input_field"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:padding="12dp"
+                android:textColor="#fff"
+                android:textColorHint="#cccccc" />
+
+            <EditText
+                android:id="@+id/edtPassword"
+                android:layout_width="300dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/input_field"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:textColor="#fff"
+                android:textColorHint="#cccccc" />
+
+            <EditText
+                android:id="@+id/edtDate"
+                android:layout_width="300dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/input_field"
+                android:focusable="false"
+                android:hint="Date of Birth"
+                android:padding="12dp"
+                android:textColor="#fff"
+                android:textColorHint="#cccccc" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnRegister"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/btn_rojo"
+                android:text="Sign up"
+                android:textColor="#F0E4D5"
+                android:textSize="18sp" />
+
+
+            <!-- LOGIN LINK -->
+            <TextView
+                android:id="@+id/txtLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Already have an account? Log in"
+                android:textColor="#F0E4D5" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
