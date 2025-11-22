@@ -12,8 +12,8 @@ public class ApiClient {
     private RequestQueue requestQueue;
     private static Context ctx;
 
-    // URL base del servidor (cambia según tu configuración)
-    public static final String BASE_URL = "http://10.0.2.2:8080/MicroservicioPasajero";
+    // URL base del servidor (cambia según tu configuración) CAMBIAAAR
+    public static final String BASE_URL = "";
 
     private ApiClient(Context context) {
         ctx = context;
