@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MARVEL_COMIC_APP">
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
