@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background_registro"
+    tools:context=".ui.fragments.ComicsFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Solicitar Comics"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#F0E4D5"
+        android:gravity="center"
+        android:padding="16dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerComics"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSolicitar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/btn_rojo"
+        android:text="Solicitar Comics Seleccionados"
+        android:textColor="#F0E4D5"
+        android:textSize="16sp"
+        android:padding="12dp" />
+
+</LinearLayout>
