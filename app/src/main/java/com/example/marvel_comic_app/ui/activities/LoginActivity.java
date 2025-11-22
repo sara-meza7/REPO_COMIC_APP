@@ -10,6 +10,8 @@ import com.example.marvel_comic_app.network.ApiClient;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.marvel_comic_app.network.ApiClient;
+import com.example.marvel_comic_app.util.PrefsManager;
+
 import org.json.JSONObject;
 
 
@@ -56,9 +58,18 @@ public class LoginActivity extends AppCompatActivity {
                     url,
                     jsonBody,
                     response -> {
-                        Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
+                        try {
+                            // Guardar datos del usuario en SharedPreferences
+                            String userName = response.getString("name");
+                            PrefsManager prefsManager = new PrefsManager(this);
+                            prefsManager.saveUserData(userName, email);
+
+                            Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            finish();
+                        } catch (Exception e) {
+                            Toast.makeText(LoginActivity.this, "Error al procesar datos", Toast.LENGTH_SHORT).show();
+                        }
                     },
                     error -> {
                         Toast.makeText(LoginActivity.this, "Invalid login", Toast.LENGTH_SHORT).show();
