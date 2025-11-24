@@ -3,12 +3,12 @@ package com.example.marvel_comic_app.model;
 public class Hero {
     private String id;
     private String name;
-    private String imageUrl;
+    private String imagenUrl;
 
-    public Hero(String id, String name, String imageUrl) {
+    public Hero(String id, String name, String imagenUrl) {
         this.id = id;
         this.name = name;
-        this.imageUrl = imageUrl;
+        this.imagenUrl = imagenUrl;
     }
 
     public String getId() {
@@ -20,6 +20,6 @@ public class Hero {
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return imagenUrl;
     }
 }

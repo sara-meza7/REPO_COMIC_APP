@@ -21,8 +21,8 @@ public class ConfigFragment extends Fragment {
     private Button btnLogout, btnDeleteAccount;
     private PrefsManager prefsManager;
 
+    //Constructor vacio
     public ConfigFragment() {
-        // Constructor vacío requerido
     }
 
     @Nullable
@@ -67,6 +67,6 @@ public class ConfigFragment extends Fragment {
 
     private void deleteAccount() {
         Toast.makeText(getContext(), "Función de eliminar cuenta en desarrollo", Toast.LENGTH_SHORT).show();
-        // Aquí puedes implementar la lógica para eliminar la cuenta del servidor
+        // Aquí implementar la lógica para eliminar la cuenta del servidor
     }
 }

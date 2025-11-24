@@ -18,7 +18,7 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
     EditText edtEmailLogin, edtPasswordLogin;
     Button btnLogin;
-    TextView txtGoRegister;
+    TextView txtGoRegistro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +28,11 @@ public class LoginActivity extends AppCompatActivity {
         edtEmailLogin = findViewById(R.id.edtEmailLogin);
         edtPasswordLogin = findViewById(R.id.edtPasswordLogin);
         btnLogin = findViewById(R.id.btnLogin);
-        txtGoRegister = findViewById(R.id.txtGoRegister);
+        txtGoRegistro = findViewById(R.id.txtGoRegistro);
 
         btnLogin.setOnClickListener(v -> loginUser());
 
-        txtGoRegister.setOnClickListener(v ->
+        txtGoRegistro.setOnClickListener(v ->
                 startActivity(new Intent(LoginActivity.this, RegistroActivity.class))
         );
     }
@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
             jsonBody.put("email", email);
             jsonBody.put("password", pass);
 
-            String url = ApiClient.buildUrl("/login");
+            String url = ApiClient.buildUrl("/login"); //end point
 
             JsonObjectRequest request = new JsonObjectRequest(
                     Request.Method.POST,
@@ -59,20 +59,20 @@ public class LoginActivity extends AppCompatActivity {
                     jsonBody,
                     response -> {
                         try {
-                            // Guardar datos del usuario en SharedPreferences
+                            // Guardar los datos del usuario en el SharedPreferences
                             String userName = response.getString("name");
                             PrefsManager prefsManager = new PrefsManager(this);
                             prefsManager.saveUserData(userName, email);
 
-                            Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Login exitoso!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
                         } catch (Exception e) {
-                            Toast.makeText(LoginActivity.this, "Error al procesar datos", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Error al procesar los datos", Toast.LENGTH_SHORT).show();
                         }
                     },
                     error -> {
-                        Toast.makeText(LoginActivity.this, "Invalid login", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "login Invalido", Toast.LENGTH_SHORT).show();
                     }
             );
 

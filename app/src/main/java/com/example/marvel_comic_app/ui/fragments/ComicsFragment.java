@@ -31,8 +31,9 @@ public class ComicsFragment extends Fragment {
     private List<Comic> selectedComics;
     private Button btnSolicitar;
 
+    // Constructor vacío
     public ComicsFragment() {
-        // Constructor vacío requerido
+
     }
 
     @Nullable

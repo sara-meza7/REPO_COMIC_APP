@@ -27,8 +27,8 @@ public class HomeFragment extends Fragment {
     private HeroAdapter adapter;
     private List<Hero> heroList;
 
+    // Constructor vacío
     public HomeFragment() {
-        // Constructor vacío requerido
     }
 
     @Nullable

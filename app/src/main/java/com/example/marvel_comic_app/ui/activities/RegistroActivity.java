@@ -67,7 +67,7 @@ public class RegistroActivity extends AppCompatActivity {
         String pass = edtPassword.getText().toString();
         String date = edtDate.getText().toString();
 
-        // Validaciones
+        // Validaciones del registroo
         if (!ValidationUtils.validateRegister(name, email, pass, date, this))
             return;
 

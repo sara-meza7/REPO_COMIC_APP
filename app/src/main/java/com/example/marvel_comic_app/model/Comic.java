@@ -3,14 +3,14 @@ package com.example.marvel_comic_app.model;
 public class Comic {
     private String id;
     private String title;
-    private String imageUrl;
+    private String imagenUrl;
     private double price;
     private boolean selected;
 
-    public Comic(String id, String title, String imageUrl, double price) {
+    public Comic(String id, String title, String imagenUrl, double price) {
         this.id = id;
         this.title = title;
-        this.imageUrl = imageUrl;
+        this.imagenUrl = imagenUrl;
         this.price = price;
         this.selected = false;
     }
@@ -23,8 +23,8 @@ public class Comic {
         return title;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImagenUrl() {
+        return imagenUrl;
     }
 
     public double getPrice() {

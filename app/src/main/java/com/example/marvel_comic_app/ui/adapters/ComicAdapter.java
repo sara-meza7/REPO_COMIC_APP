@@ -43,7 +43,7 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
         holder.checkBox.setChecked(comic.isSelected());
 
         Picasso.get()
-                .load(comic.getImageUrl())
+                .load(comic.getImagenUrl())
                 .placeholder(R.drawable.marvel_logo)
                 .into(holder.imgComic);
 
