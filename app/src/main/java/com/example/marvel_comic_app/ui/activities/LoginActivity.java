@@ -1,15 +1,15 @@
 package com.example.marvel_comic_app.ui.activities;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.*;
 import com.example.marvel_comic_app.R;
-import com.example.marvel_comic_app.model.Usuario;
 import com.example.marvel_comic_app.network.ApiClient;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.marvel_comic_app.network.ApiClient;
 import com.example.marvel_comic_app.util.PrefsManager;
 
 import org.json.JSONObject;
@@ -19,6 +19,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText edtEmailLogin, edtPasswordLogin;
     Button btnLogin;
     TextView txtGoRegistro;
+
+    private static final String TAG = "LOGIN_APP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
             jsonBody.put("password", pass);
 
             String url = ApiClient.buildUrl("/login"); //end point
+            Log.d(TAG, "Intentando login en URL: " + url);
+            Log.d(TAG, "Enviando JSON: " + jsonBody.toString());
 
             JsonObjectRequest request = new JsonObjectRequest(
                     Request.Method.POST,
@@ -59,26 +63,48 @@ public class LoginActivity extends AppCompatActivity {
                     jsonBody,
                     response -> {
                         try {
-                            // Guardar los datos del usuario en el SharedPreferences
-                            String userName = response.getString("name");
-                            PrefsManager prefsManager = new PrefsManager(this);
-                            prefsManager.saveUserData(userName, email);
+                            Log.d(TAG, "Login exitoso. Respuesta: " + response.toString());
 
-                            Toast.makeText(LoginActivity.this, "Login exitoso!", Toast.LENGTH_SHORT).show();
+                            // 1. Obtener el objeto "user" que está dentro de la respuesta
+                            JSONObject userObject = response.getJSONObject("user");
+
+                            // 2. Ahora, desde ese objeto, obtenemos el nombre y el email
+                            String userName = userObject.getString("name");
+                            String userEmail = userObject.getString("email");
+
+                            // 3. Guardar los datos del usuario en SharedPreferences
+                            PrefsManager prefsManager = new PrefsManager(this);
+                            prefsManager.saveUserData(userName, userEmail); // Guardamos el email correcto de la respuesta
+
+                            Toast.makeText(LoginActivity.this, "¡Bienvenido, " + userName + "!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
+
                         } catch (Exception e) {
-                            Toast.makeText(LoginActivity.this, "Error al procesar los datos", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "Error al procesar la respuesta JSON del login", e);
+                            Toast.makeText(LoginActivity.this, "Error al procesar los datos del servidor", Toast.LENGTH_SHORT).show();
                         }
+                        // ***** FIN DE LA CORRECCIÓN *****
                     },
                     error -> {
-                        Toast.makeText(LoginActivity.this, "login Invalido", Toast.LENGTH_SHORT).show();
+                        // ***** INICIO DE LA MEJORA EN MANEJO DE ERRORES *****
+                        if (error.networkResponse != null && error.networkResponse.statusCode == 401) {
+                            // Error 401: Credenciales inválidas
+                            Log.w(TAG, "Error 401: Credenciales inválidas.");
+                            Toast.makeText(LoginActivity.this, "Correo o contraseña incorrectos", Toast.LENGTH_LONG).show();
+                        } else {
+                            // Otro tipo de error (sin conexión, error del servidor, etc.)
+                            Log.e(TAG, "Error de Volley en login", error);
+                            Toast.makeText(LoginActivity.this, "Error de conexión o del servidor", Toast.LENGTH_LONG).show();
+                        }
+                        // ***** FIN DE LA MEJORA EN MANEJO DE ERRORES *****
                     }
             );
 
             ApiClient.getInstance(this).addToRequestQueue(request);
 
         } catch (Exception e) {
+            Log.e(TAG, "Excepción al crear la petición de login", e);
             Toast.makeText(this, "Error al crear la solicitud", Toast.LENGTH_SHORT).show();
         }
     }

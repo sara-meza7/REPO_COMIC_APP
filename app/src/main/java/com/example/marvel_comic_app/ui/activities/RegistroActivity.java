@@ -22,7 +22,6 @@ public class RegistroActivity extends AppCompatActivity {
     Button btnRegister;
     TextView txtLogin;
 
-    //Definicion de una etiqueta para los logs
     private static final String TAG = "REGISTRO_APP";
 
     @Override
