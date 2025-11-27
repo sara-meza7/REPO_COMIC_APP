@@ -13,7 +13,7 @@ public class ApiClient {
     private static Context ctx;
 
     // URL base del servidor (cambia según tu configuración) CAMBIAAAR
-    public static final String BASE_URL = "";
+    public static final String BASE_URL = "http://192.168.1.6:3000"; //
 
     private ApiClient(Context context) {
         ctx = context;

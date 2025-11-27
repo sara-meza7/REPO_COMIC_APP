@@ -90,7 +90,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/btn_rojo"
-                android:text="Sign up"
+                android:text="Registrar"
                 android:textColor="#F0E4D5"
                 android:textSize="18sp" />
 

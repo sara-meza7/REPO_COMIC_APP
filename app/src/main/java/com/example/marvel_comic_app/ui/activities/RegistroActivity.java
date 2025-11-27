@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.*;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -16,11 +17,13 @@ import com.example.marvel_comic_app.util.ValidationUtils;
 import org.json.JSONObject;
 import java.util.Calendar;
 
-
 public class RegistroActivity extends AppCompatActivity {
     EditText edtName, edtEmail, edtPassword, edtDate;
     Button btnRegister;
     TextView txtLogin;
+
+    //Definicion de una etiqueta para los logs
+    private static final String TAG = "REGISTRO_APP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +37,8 @@ public class RegistroActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         txtLogin = findViewById(R.id.txtLogin);
 
-        // para seleccionar la fecha
         edtDate.setOnClickListener(v -> showDatePicker());
-
-        // click del registro
         btnRegister.setOnClickListener(v -> registerUser());
-
-        // Ir a login
         txtLogin.setOnClickListener(v ->
                 startActivity(new Intent(RegistroActivity.this, LoginActivity.class))
         );
@@ -61,13 +59,11 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-
         String name = edtName.getText().toString();
         String email = edtEmail.getText().toString();
         String pass = edtPassword.getText().toString();
         String date = edtDate.getText().toString();
 
-        // Validaciones del registroo
         if (!ValidationUtils.validateRegister(name, email, pass, date, this))
             return;
 
@@ -78,11 +74,15 @@ public class RegistroActivity extends AppCompatActivity {
             jsonBody.put("password", pass);
             jsonBody.put("birthDate", date);
 
-            JsonObjectRequest request = getJsonObjectRequest(jsonBody);
+            String url = ApiClient.buildUrl("/register");
+            Log.d(TAG, "Intentando registrar en URL: " + url);
+            Log.d(TAG, "Enviando JSON: " + jsonBody.toString());
 
+            JsonObjectRequest request = getJsonObjectRequest(jsonBody);
             ApiClient.getInstance(this).addToRequestQueue(request);
 
         } catch (Exception e) {
+            Log.e(TAG, "Excepción al crear la petición JSON: ", e);
             Toast.makeText(this, "Error al crear la solicitud", Toast.LENGTH_SHORT).show();
         }
     }
@@ -91,19 +91,30 @@ public class RegistroActivity extends AppCompatActivity {
     private JsonObjectRequest getJsonObjectRequest(JSONObject jsonBody) {
         String url = ApiClient.buildUrl("/register");
 
-        JsonObjectRequest request = new JsonObjectRequest(
+        return new JsonObjectRequest(
                 Request.Method.POST,
                 url,
                 jsonBody,
                 response -> {
+                    Log.d(TAG, "Registro exitoso. Respuesta: " + response.toString());
+
                     Toast.makeText(RegistroActivity.this, "Usuario creado", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegistroActivity.this, LoginActivity.class));
                     finish();
                 },
                 error -> {
+                    if (error.networkResponse != null) {
+                        // El servidor respondió, pero con un código de error (4xx, 5xx)
+                        Log.e(TAG, "Error de servidor. Código: " + error.networkResponse.statusCode);
+                        Log.e(TAG, "Datos del error: " + new String(error.networkResponse.data));
+                    } else {
+                        // No hubo respuesta del servidor (Timeout, sin conexión, IP incorrecta, etc.)
+                        Log.e(TAG, "Error de conexión (Sin respuesta del servidor)", error);
+                    }
+
                     Toast.makeText(RegistroActivity.this, "Error al registrarse", Toast.LENGTH_SHORT).show();
                 }
         );
-        return request;
     }
 }
+
