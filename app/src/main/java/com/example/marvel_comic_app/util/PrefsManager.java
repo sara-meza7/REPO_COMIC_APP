@@ -26,11 +26,11 @@ public class PrefsManager {
     }
 
     public String getUserName() {
-        return prefs.getString(KEY_USER_NAME, null);
+        return prefs.getString(KEY_USER_NAME, "Usuario no encontrado");
     }
 
     public String getUserEmail() {
-        return prefs.getString(KEY_USER_EMAIL, null);
+        return prefs.getString(KEY_USER_EMAIL, "email@ no encontrado");
     }
 
     public boolean isLoggedIn() {
