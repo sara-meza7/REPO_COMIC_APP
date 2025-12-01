@@ -1,5 +1,7 @@
 package com.example.marvel_comic_app.ui.activities;
 
+import static com.example.marvel_comic_app.network.ApiConstants.API_TOKEN;
+
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,7 +52,7 @@ public class DetalleActivity extends AppCompatActivity {
     }
 
     private void loadHeroDetails(String heroId) {
-        String url = "https://superheroapi.com/api/10158190334933491/" + heroId;
+        String url = "https://superheroapi.com/api/"+API_TOKEN+"/" + heroId;
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,

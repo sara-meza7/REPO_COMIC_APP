@@ -1,5 +1,7 @@
 package com.example.marvel_comic_app.ui.fragments;
 
+import static com.example.marvel_comic_app.network.ApiConstants.API_TOKEN;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private HeroAdapter adapter;
     private List<Hero> heroList;
+    private static final String TAG = "HomeFragment"; // Etiqueta para logs
 
     // Constructor vacío
     public HomeFragment() {
@@ -50,8 +53,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadHeroes() {
-        // API de Superhéroes: https://superheroapi.com/api/ACCESS_TOKEN/search/name
-        String url = "https://superheroapi.com/api/10158190334933491/search/a";
+        String url = "https://superheroapi.com/api/"+API_TOKEN+"/search/a";
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
