@@ -2,6 +2,7 @@ package com.example.marvel_comic_app.ui.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,17 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.HeroViewHolder
         Picasso.get()
                 .load(hero.getImageUrl())
                 .placeholder(R.drawable.marvel_logo)
-                .into(holder.imgHero);
+                .into(holder.imgHero, new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d("PICASSO", "✔ Imagen cargada correctamente");
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Log.e("PICASSO", "❌ Error cargando la imagen: " + hero.getImageUrl(), e);
+                    }
+                });
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetalleActivity.class);

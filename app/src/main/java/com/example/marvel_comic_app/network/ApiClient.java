@@ -12,7 +12,7 @@ public class ApiClient {
     private RequestQueue requestQueue;
     private static Context ctx;
 
-    // URL base del servidor (cambia según tu configuración) CAMBIAAAR
+    // URL base del servidor  CAMBIAAAR si es necesario
     public static final String BASE_URL = "http://192.168.1.6:3000"; //
 
     private ApiClient(Context context) {

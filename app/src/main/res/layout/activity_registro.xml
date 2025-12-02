@@ -33,16 +33,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:text="Register to continue"
+                android:fontFamily="@font/roboto_condensed_bold"
                 android:textColor="#F0E4D5"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/edtName"
-                android:layout_width="300dp"
+                android:layout_width="280dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/input_field"
+                android:fontFamily="@font/roboto"
                 android:hint="Name"
                 android:padding="12dp"
                 android:textColor="#F0E4D5"
@@ -50,11 +52,12 @@
 
             <EditText
                 android:id="@+id/edtEmail"
-                android:layout_width="300dp"
+                android:layout_width="280dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/input_field"
                 android:hint="Email"
+                android:fontFamily="@font/roboto"
                 android:inputType="textEmailAddress"
                 android:padding="12dp"
                 android:textColor="#fff"
@@ -62,9 +65,10 @@
 
             <EditText
                 android:id="@+id/edtPassword"
-                android:layout_width="300dp"
+                android:layout_width="280dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto"
                 android:background="@drawable/input_field"
                 android:hint="Password"
                 android:inputType="textPassword"
@@ -74,7 +78,7 @@
 
             <EditText
                 android:id="@+id/edtDate"
-                android:layout_width="300dp"
+                android:layout_width="280dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/input_field"
@@ -82,15 +86,17 @@
                 android:hint="Date of Birth"
                 android:padding="12dp"
                 android:textColor="#fff"
+                android:fontFamily="@font/roboto"
                 android:textColorHint="#cccccc" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnRegister"
-                android:layout_width="250dp"
+                android:layout_width="240dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/btn_rojo"
                 android:text="Registrar"
+                android:fontFamily="@font/roboto_condensed_bold"
                 android:textColor="#F0E4D5"
                 android:textSize="18sp" />
 
@@ -101,6 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
+                android:fontFamily="@font/roboto"
                 android:text="Already have an account? Log in"
                 android:textColor="#F0E4D5" />
         </LinearLayout>

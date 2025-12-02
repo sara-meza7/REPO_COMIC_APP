@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:background="@drawable/input_field_back"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp">
 
@@ -24,11 +23,13 @@
         <TextView
             android:id="@+id/txtHeroName"
             android:layout_width="match_parent"
+            android:fontFamily="@font/roboto_condensed_bold"
             android:layout_height="wrap_content"
             android:text="Hero Name"
+            android:background="@color/red"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#000"
+            android:textColor="@color/white"
             android:gravity="center"
             android:padding="12dp" />
 

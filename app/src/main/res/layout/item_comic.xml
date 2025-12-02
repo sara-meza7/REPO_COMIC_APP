@@ -32,7 +32,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Comic Title"
-                android:textSize="16sp"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="#000"
                 android:maxLines="2"
@@ -44,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="$15.99"
+                android:fontFamily="@font/roboto_bold"
                 android:textColor="#E23636"
                 android:textSize="18sp"
                 android:textStyle="bold" />

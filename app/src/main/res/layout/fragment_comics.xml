@@ -11,14 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Solicitar Comics"
-        android:textSize="24sp"
+        android:textSize="25dp"
         android:textStyle="bold"
+        android:fontFamily="@font/roboto_condensed_bold"
         android:textColor="#F0E4D5"
         android:gravity="center"
         android:padding="16dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerComics"
+        android:background="@drawable/input_field_back"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -30,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@drawable/btn_rojo"
+        android:fontFamily="@font/roboto_condensed_bold"
         android:text="Solicitar Comics Seleccionados"
         android:textColor="#F0E4D5"
         android:textSize="16sp"

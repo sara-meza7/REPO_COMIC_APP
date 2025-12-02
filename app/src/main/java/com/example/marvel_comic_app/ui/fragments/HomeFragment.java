@@ -1,7 +1,5 @@
 package com.example.marvel_comic_app.ui.fragments;
 
-import static com.example.marvel_comic_app.network.ApiConstants.API_TOKEN;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +26,6 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private HeroAdapter adapter;
     private List<Hero> heroList;
-    private static final String TAG = "HomeFragment"; // Etiqueta para logs
 
     // Constructor vacío
     public HomeFragment() {
@@ -53,7 +50,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadHeroes() {
-        String url = "https://superheroapi.com/api/"+API_TOKEN+"/search/a";
+        // API de Superhéroes para obtener datos y stats
+        String url = "https://superheroapi.com/api/834ae4e93d1f0213444bb38f67504765/search/a";
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
@@ -67,12 +65,10 @@ public class HomeFragment extends Fragment {
 
                             String id = heroObj.getString("id");
                             String name = heroObj.getString("name");
-                            String imageUrl = heroObj.getJSONObject("image").getString("url");
 
-                            Hero hero = new Hero(id, name, imageUrl);
-                            heroList.add(hero);
+                            // Cargamos la imagen desde Akabab API usando el mismo ID
+                            loadHeroImage(id, name);
                         }
-                        adapter.notifyDataSetChanged();
                     } catch (Exception e) {
                         Toast.makeText(getContext(), "Error al cargar héroes", Toast.LENGTH_SHORT).show();
                     }
@@ -81,5 +77,35 @@ public class HomeFragment extends Fragment {
         );
 
         ApiClient.getInstance(getContext()).addToRequestQueue(request);
+    }
+
+    private void loadHeroImage(String heroId, String heroName) {
+        // API de Akabab para obtener la imagen del héroe
+        String akababUrl = "https://akabab.github.io/superhero-api/api/id/" + heroId + ".json";
+
+        JsonObjectRequest imageRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                akababUrl,
+                null,
+                response -> {
+                    try {
+                        String imageUrl = response.getJSONObject("images").getString("md");
+
+                        // Creamos el héroe con la imagen de Akabab
+                        Hero hero = new Hero(heroId, heroName, imageUrl);
+                        heroList.add(hero);
+                        adapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                        // Si falla Akabab, podemos usar una imagen por defecto o simplemente no agregar
+                        Toast.makeText(getContext(), "Error al cargar imagen de " + heroName, Toast.LENGTH_SHORT).show();
+                    }
+                },
+                error -> {
+                    // Si falla la carga de imagen, podemos usar una imagen por defecto
+                    Toast.makeText(getContext(), "Error de imagen para " + heroName, Toast.LENGTH_SHORT).show();
+                }
+        );
+
+        ApiClient.getInstance(getContext()).addToRequestQueue(imageRequest);
     }
 }
