@@ -1,9 +1,13 @@
 package com.example.marvel_comic_app.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +30,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private HeroAdapter adapter;
     private List<Hero> heroList;
+    private EditText edtBuscarHeroe;
 
     // Constructor vacío
     public HomeFragment() {
@@ -38,20 +43,69 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerHeroes);
+        edtBuscarHeroe = view.findViewById(R.id.edtBuscarHeroe);
+
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         heroList = new ArrayList<>();
         adapter = new HeroAdapter(heroList, getContext());
         recyclerView.setAdapter(adapter);
 
-        loadHeroes();
+        loadHeroes("a");
+
+        setupSearchView();
 
         return view;
     }
 
-    private void loadHeroes() {
-        // API de Superhéroes para obtener datos y stats
-        String url = "https://superheroapi.com/api/834ae4e93d1f0213444bb38f67504765/search/a";
+    private void setupSearchView() {
+        final Handler handler = new Handler();
+        final int delay = 500;
+
+        edtBuscarHeroe.addTextChangedListener(new TextWatcher() {
+            private Runnable searchRunnable;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Cancelar la búsqueda anterior si el usuario sigue escribiendo
+                if (searchRunnable != null) {
+                    handler.removeCallbacks(searchRunnable);
+                }
+
+                searchRunnable = () -> {
+                    String searchText = s.toString().trim();
+
+                    if (searchText.isEmpty()) {
+                        // Si está vacío, volver a mostrar héroes con "a"
+                        loadHeroes("a");
+                    } else {
+                        // Buscar con el texto ingresado
+                        loadHeroes(searchText);
+                    }
+                };
+
+                // Esperar 500ms después de que el usuario deje de escribir
+                handler.postDelayed(searchRunnable, delay);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // No necesario
+            }
+        });
+    }
+
+    private void loadHeroes(String searchTerm) {
+        // Limpiar la lista antes de cargar nuevos resultados
+        heroList.clear();
+        adapter.notifyDataSetChanged();
+
+        // API de Superhéroes con término de búsqueda dinámico
+        String url = "https://superheroapi.com/api/834ae4e93d1f0213444bb38f67504765/search/" + searchTerm;
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
@@ -59,15 +113,23 @@ public class HomeFragment extends Fragment {
                 null,
                 response -> {
                     try {
-                        JSONArray results = response.getJSONArray("results");
-                        for (int i = 0; i < results.length(); i++) {
-                            JSONObject heroObj = results.getJSONObject(i);
+                        String responseStatus = response.getString("response");
 
-                            String id = heroObj.getString("id");
-                            String name = heroObj.getString("name");
+                        // Verificar si la API encontró resultados
+                        if (responseStatus.equals("success")) {
+                            JSONArray results = response.getJSONArray("results");
+                            for (int i = 0; i < results.length(); i++) {
+                                JSONObject heroObj = results.getJSONObject(i);
 
-                            // Cargamos la imagen desde Akabab API usando el mismo ID
-                            loadHeroImage(id, name);
+                                String id = heroObj.getString("id");
+                                String name = heroObj.getString("name");
+
+                                // Cargamos la imagen desde Akabab API usando el mismo ID
+                                loadHeroImage(id, name);
+                            }
+                        } else {
+                            // No se encontraron resultados
+                            Toast.makeText(getContext(), "No se encontraron héroes", Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
                         Toast.makeText(getContext(), "Error al cargar héroes", Toast.LENGTH_SHORT).show();
