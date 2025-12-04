@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.w(TAG, "Error 401: Credenciales inválidas.");
                             Toast.makeText(LoginActivity.this, "Correo o contraseña incorrectos", Toast.LENGTH_LONG).show();
                         } else {
-                            // Otro tipo de error (sin conexión, error del servidor, etc.)
+                            // Para CUALQUIER OTRO tipo de error (sin conexión, error del servidor, etc.)
                             Log.e(TAG, "Error de Volley en login", error);
                             Toast.makeText(LoginActivity.this, "Error de conexión o del servidor", Toast.LENGTH_LONG).show();
                         }
