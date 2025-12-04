@@ -65,16 +65,15 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             Log.d(TAG, "Login exitoso. Respuesta: " + response.toString());
 
-                            // 1. Obtener el objeto "user" que está dentro de la respuesta
                             JSONObject userObject = response.getJSONObject("user");
 
-                            // 2. Ahora, desde ese objeto, obtenemos el nombre y el email
                             String userName = userObject.getString("name");
                             String userEmail = userObject.getString("email");
+                            String userId = response.getString("userId");
 
-                            // 3. Guardar los datos del usuario en SharedPreferences
+
                             PrefsManager prefsManager = new PrefsManager(this);
-                            prefsManager.saveUserData(userName, userEmail); // Guardamos el email correcto de la respuesta
+                            prefsManager.saveUserData(userName, userEmail, userId);
 
                             Toast.makeText(LoginActivity.this, "¡Bienvenido, " + userName + "!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -84,10 +83,8 @@ public class LoginActivity extends AppCompatActivity {
                             Log.e(TAG, "Error al procesar la respuesta JSON del login", e);
                             Toast.makeText(LoginActivity.this, "Error al procesar los datos del servidor", Toast.LENGTH_SHORT).show();
                         }
-                        // ***** FIN DE LA CORRECCIÓN *****
                     },
                     error -> {
-                        // ***** INICIO DE LA MEJORA EN MANEJO DE ERRORES *****
                         if (error.networkResponse != null && error.networkResponse.statusCode == 401) {
                             // Error 401: Credenciales inválidas
                             Log.w(TAG, "Error 401: Credenciales inválidas.");
@@ -97,7 +94,6 @@ public class LoginActivity extends AppCompatActivity {
                             Log.e(TAG, "Error de Volley en login", error);
                             Toast.makeText(LoginActivity.this, "Error de conexión o del servidor", Toast.LENGTH_LONG).show();
                         }
-                        // ***** FIN DE LA MEJORA EN MANEJO DE ERRORES *****
                     }
             );
 

@@ -11,18 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.marvel_comic_app.R;
 import com.example.marvel_comic_app.model.Comic;
-import com.squareup.picasso.Picasso;
 import java.util.List;
+import java.util.Locale;
 
 public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHolder> {
 
-    private List<Comic> comicList;
-    private List<Comic> selectedComics;
-    private Context context;
+    private final List<Comic> comicList;
+    private final Context context;
 
-    public ComicAdapter(List<Comic> comicList, List<Comic> selectedComics, Context context) {
+    // El constructor ya no necesita la lista de seleccionados
+    public ComicAdapter(List<Comic> comicList, Context context) {
         this.comicList = comicList;
-        this.selectedComics = selectedComics;
         this.context = context;
     }
 
@@ -39,28 +38,24 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
         Comic comic = comicList.get(position);
 
         holder.txtTitle.setText(comic.getTitle());
-        holder.txtPrice.setText("$" + String.format("%.2f", comic.getPrice()));
+        holder.txtPrice.setText(String.format(Locale.US, "$%.2f", comic.getPrice()));
+
+        // Limpia el listener anterior para evitar bugs en vistas recicladas
+        holder.checkBox.setOnCheckedChangeListener(null);
+
+        // Establece el estado actual del checkbox
         holder.checkBox.setChecked(comic.isSelected());
 
-        Picasso.get()
-                .load(comic.getImagenUrl())
-                .placeholder(R.drawable.marvel_logo)
-                .into(holder.imgComic);
+        // Establece la imagen del logo
+        holder.imgComic.setImageResource(R.drawable.marvel_logo);
 
+        // Cuando el checkbox cambia, simplemente actualiza el estado del objeto Comic
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             comic.setSelected(isChecked);
-            if (isChecked) {
-                if (!selectedComics.contains(comic)) {
-                    selectedComics.add(comic);
-                }
-            } else {
-                selectedComics.remove(comic);
-            }
         });
 
-        holder.itemView.setOnClickListener(v -> {
-            holder.checkBox.setChecked(!holder.checkBox.isChecked());
-        });
+        // Hacemos que toda la tarjeta sea "clicable" para invertir el estado del checkbox
+        holder.itemView.setOnClickListener(v -> holder.checkBox.setChecked(!holder.checkBox.isChecked()));
     }
 
     @Override

@@ -9,6 +9,7 @@ public class PrefsManager {
     private static final String KEY_USER_NAME = "user_name";
     private static final String KEY_USER_EMAIL = "user_email";
     private static final String KEY_IS_LOGGED_IN = "is_logged_in";
+    private static final String KEY_USER_ID = "user_id";
 
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
@@ -18,9 +19,10 @@ public class PrefsManager {
         editor = prefs.edit();
     }
 
-    public void saveUserData(String name, String email) {
+    public void saveUserData(String name, String email, String userId) {
         editor.putString(KEY_USER_NAME, name);
         editor.putString(KEY_USER_EMAIL, email);
+        editor.putString(KEY_USER_ID, userId);
         editor.putBoolean(KEY_IS_LOGGED_IN, true);
         editor.apply();
     }
@@ -31,6 +33,10 @@ public class PrefsManager {
 
     public String getUserEmail() {
         return prefs.getString(KEY_USER_EMAIL, "email@ no encontrado");
+    }
+
+    public String getUserId() {
+        return prefs.getString(KEY_USER_ID, null);
     }
 
     public boolean isLoggedIn() {
