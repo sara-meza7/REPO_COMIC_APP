@@ -66,6 +66,16 @@ public class ComicsFragment extends Fragment {
         comicList.add(new Comic("4", "Captain America: Winter Soldier","null",35.99));
         comicList.add(new Comic("5", "Black Widow: Deadly Origin","null",27.99));
         comicList.add(new Comic("6", "Avengers: Endgame Prelude","null",20.99));
+        comicList.add(new Comic("7", "Batman v Superman: Dawn of Justice", "null", 29.99));
+        comicList.add(new Comic("8", "The Batman Who Laughs", "null", 31.99));
+        comicList.add(new Comic("9", "Green Lantern: The Power of Ion (Todos los anillos)", "null", 34.99));
+        comicList.add(new Comic("10", "Spider-Man 2099: Volume 1", "null", 26.99));
+        comicList.add(new Comic("11", "Marvel Zombies", "null", 28.99));
+        comicList.add(new Comic("12", "X-Men: Dark Phoenix Saga", "null", 32.99));
+        comicList.add(new Comic("13", "Nightwing: Better Than Batman", "null", 24.99));
+        comicList.add(new Comic("14", "The Punisher: MAX — Born", "null", 29.99));
+        comicList.add(new Comic("15", "Daredevil: The Man Without Fear", "null", 27.99));
+        comicList.add(new Comic("16", "Justice League: Darkseid War", "null", 33.99));
         adapter.notifyDataSetChanged();
     }
 
